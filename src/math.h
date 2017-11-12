@@ -1,13 +1,15 @@
 #ifndef SD_MATH_H
 #define SD_MATH_H
 
+typedef float SDFloat;
+
 // ----------------------------------------------------------------------------
 // Vector 2
 // ----------------------------------------------------------------------------
 
-typedef struct Vec2 {
-  float x, y;
-} Vec2;
+typedef struct SDVec2 {
+  SDFloat x, y;
+} SDVec2;
 
 // ----------------------------------------------------------------------------
 // Matrix 3
@@ -26,18 +28,18 @@ typedef struct Vec2 {
 //     | 0 0 1 |   | 1 |
 //
 // This matrix use column-major order to store elements
-typedef struct Mat3 {
-  float m00, m10, m20;
-  float m01, m11, m21;
-  float m02, m12, m22;
-} Mat3;
+typedef struct SDMat3 {
+  SDFloat m00, m10, m20;
+  SDFloat m01, m11, m21;
+  SDFloat m02, m12, m22;
+} SDMat3;
 
 // ----------------------------------------------------------------------------
 // Rectangle
 // ----------------------------------------------------------------------------
 
-typedef struct Rect {
-  Vec2 min, max;
-} Rect;
+typedef struct SDRect {
+  SDVec2 min, max;
+} SDRect;
 
 #endif  // SD_MATH_H

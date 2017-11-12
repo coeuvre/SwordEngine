@@ -4,9 +4,10 @@
 #include "def.h"
 #include "math.h"
 
-typedef struct Color {
-  float r, g, b, a;
-} Color;
+// Normalized color
+typedef struct SDColor {
+  SDFloat r, g, b, a;
+} SDColor;
 
 // ----------------------------------------------------------------------------
 // Graphics Properties
@@ -31,48 +32,69 @@ SDAPI int SDGetViewportHeight(void);
 SDAPI void SDPushState(void);
 SDAPI void SDPopState(void);
 
-SDAPI void SDPushMatrix(Mat3 mat);
+SDAPI void SDPushMatrix(SDMat3 mat);
 SDAPI void SDPopMatrix(void);
-
-SDAPI void SDSetFillColor(Color fill);
-SDAPI void SDSetStrokeColor(Color stroke);
-SDAPI void SDSetTintColor(Color tint);
-
-SDAPI void SDSetTextureAnchor(float x, float y);
 
 // ----------------------------------------------------------------------------
 // Image
 // ----------------------------------------------------------------------------
 
 // Image stored in CPU memory
-typedef struct Image {
+typedef struct SDImage {
   int width;
   int height;
   int format;
   void *data;
-} Image;
+} SDImage;
 
-SDAPI Image *LoadImage(const char *path);
-SDAPI Image *DestroyImage(Image **image);
+SDAPI SDImage *LoadImage(const char *path);
+SDAPI SDImage *DestroyImage(SDImage **image);
 
 // ----------------------------------------------------------------------------
 // Texture
 // ----------------------------------------------------------------------------
 
 // Image stored in GPU memory
-typedef struct Texture Texture;
+typedef struct SDTexture SDTexture;
 
 // Load texture from disk at given path
-SDAPI Texture *SDLoadTexture(const char *path);
+SDAPI SDTexture *SDLoadTexture(const char *path);
 // Load Texture from Image
-SDAPI Texture *SDLoadTextureFromImage(const Image *image);
-SDAPI void SDDestoryTexture(Texture **texture);
-SDAPI void SDDrawTexture(const Texture *texture, float x, float y);
-SDAPI void SDDrawTextureSub(const Texture *texture, Rect rect, float x,
-                            float y);
+SDAPI SDTexture *SDLoadTextureFromImage(const SDImage *image);
+SDAPI void SDDestoryTexture(SDTexture **texture);
+
+typedef struct SDDrawTextureParams {
+  SDTexture *texture;
+  SDRect dstRect;  // Destination rect in world space
+  SDRect srcRect;  // Source rect in texture space (pixel)
+  SDColor tintColor;
+} SDDrawTextureParams;
+
+SDAPI SDDrawTextureParams SDDefaultDrawTextureParams(SDTexture *texture);
+
+/**
+ * Code Example:
+ *
+ * SDTexture *texture = SDLoadTexture("xxx.png");
+ * SDDrawTextureParams dtp = SDDefaultDrawTextureParams(texture);
+ * SDDrawTexture(&dtp);
+ * SDDestroyTexture(&texture);
+ */
+SDAPI void SDDrawTexture(const SDDrawTextureParams *params);
 
 // ----------------------------------------------------------------------------
 // Shape
 // ----------------------------------------------------------------------------
+typedef struct SDDrawRectParams {
+  SDRect rect;
+  SDFloat borderWidth;
+  SDFloat cornerRadius;
+  SDColor strokeColor;
+  SDColor fillColor;
+} SDDrawRectParams;
+
+SDAPI SDDrawRectParams SDDefaultDrawRectParams(SDRect rect);
+
+SDAPI void SDDrawRect(const SDDrawRectParams *params);
 
 #endif  // SD_RENDER_H
