@@ -17,13 +17,16 @@ typedef struct SDColor {
 SDAPI int SDGetDeviceWidth(void);
 SDAPI int SDGetDeviceHeight(void);
 
-// Get drawing size in point
-SDAPI int SDGetCanvasWidth(void);
-SDAPI int SDGetCanvasHeight(void);
-
 // Get viewport size in pixel
 SDAPI int SDGetViewportWidth(void);
 SDAPI int SDGetViewportHeight(void);
+
+// Get drawing size in point
+SDAPI float SDGetCanvasWidth(void);
+SDAPI float SDGetCanvasHeight(void);
+
+SDAPI float SDGetPointToPixel(void);
+SDAPI float SDGetPixelToPoint(void);
 
 // ----------------------------------------------------------------------------
 // Render State
@@ -47,8 +50,8 @@ typedef struct SDImage {
   void *data;
 } SDImage;
 
-SDAPI SDImage *LoadImage(const char *path);
-SDAPI SDImage *DestroyImage(SDImage **image);
+SDAPI SDImage *SDLoadImage(const char *path);
+SDAPI SDImage *SDDestroyImage(SDImage **image);
 
 // ----------------------------------------------------------------------------
 // Texture
