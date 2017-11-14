@@ -1,3 +1,3 @@
 #include "context.h"
 
-SDContext *CTX;
+SDContext *CTX = NULL;

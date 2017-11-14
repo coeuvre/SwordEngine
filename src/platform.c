@@ -78,7 +78,7 @@ SDAPI void SDInit(const SDConfig *config) {
 
 #ifndef SD_PLATFORM_WIN32
   int drawableWidth, drawableHeight;
-  SDL_GL_GetDrawableSize(CTX->sdlWindow, &drawableWidth, &drawableHeight);
+  SDL_GL_GetDrawableSize(CTX->window, &drawableWidth, &drawableHeight);
   CTX->pointToPixel = drawableWidth * 1.0f / CTX->viewportWidth;
 #endif
 }
