@@ -9,7 +9,13 @@ SDAPI SDConfig SDDefaultConfig(void) {
                  .height = 720,
                  .title = "Sword Engine",
                  .supportHiDPI = 1},
+      .exitOnEsc = 0,
   };
+
+#ifdef SD_DEBUG
+  config.exitOnEsc = 1;
+#endif
+
   return config;
 }
 
@@ -87,3 +93,5 @@ SDAPI void SDQuit(void) {
   free(CTX);
   CTX = NULL;
 }
+
+SDAPI void SDRunScene(void) {}

@@ -13,6 +13,7 @@ message(STATUS "CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}")
 # Setup libraries
 if (CMAKE_BUILD_TYPE MATCHES Debug)
     include_directories(lib/glad/debug/include)
+    add_definitions(-DSD_DEBUG)
     add_library(glad lib/glad/debug/src/glad.c)
 elseif (CMAKE_BUILD_TYPE MATCHES Release)
     include_directories(lib/glad/release/include)
@@ -20,6 +21,8 @@ elseif (CMAKE_BUILD_TYPE MATCHES Release)
 endif ()
 
 include_directories(lib/stb)
+
+include_directories(include/sword)
 
 # Compile engine
 add_library(
@@ -44,7 +47,6 @@ endif ()
 
 target_link_libraries(sword ${libs})
 
-include_directories(src)
-
+include_directories(include)
 add_executable(helloworld example/helloworld.c)
 target_link_libraries(helloworld sword)

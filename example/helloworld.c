@@ -1,6 +1,6 @@
 #include "stdio.h"
 
-#include "sword.h"
+#include "sword/sword.h"
 
 int main(int argc, char *argv[]) {
   SDConfig config = SDDefaultConfig();
