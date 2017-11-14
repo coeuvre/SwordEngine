@@ -8,8 +8,8 @@
 #include <windows.h>
 #endif
 
-#include <SDL2/SDL.h>
-#include <glad/glad.h>
+struct SDL_Window;
+struct SDL_GLContext;
 
 typedef struct SDContext {
   int isRunning;
@@ -20,8 +20,8 @@ typedef struct SDContext {
   int viewportWidth;
   int viewportHeight;
 
-  SDL_Window *window;
-  SDL_GLContext *glContext;
+  struct SDL_Window *window;
+  struct SDL_GLContext *glContext;
 } SDContext;
 
 extern SDContext *CTX;

@@ -1,5 +1,8 @@
 #include "sword/platform.h"
 
+#include <SDL2/SDL.h>
+#include <glad/glad.h>
+
 #include "context.h"
 
 SDAPI SDConfig SDDefaultConfig(void) {

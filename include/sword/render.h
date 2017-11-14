@@ -42,16 +42,22 @@ SDAPI void SDPopMatrix(void);
 // Image
 // ----------------------------------------------------------------------------
 
+enum {
+  SD_IMAGE_FORMAT_RGBA8,
+  SD_IMAGE_FORMAT_A8,
+};
+
 // Image stored in CPU memory
 typedef struct SDImage {
   int width;
   int height;
+  int stride;
   int format;
   void *data;
 } SDImage;
 
 SDAPI SDImage *SDLoadImage(const char *path);
-SDAPI SDImage *SDDestroyImage(SDImage **image);
+SDAPI void SDDestroyImage(SDImage **image);
 
 // ----------------------------------------------------------------------------
 // Texture
