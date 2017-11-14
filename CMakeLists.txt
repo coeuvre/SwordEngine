@@ -22,7 +22,7 @@ endif ()
 
 include_directories(lib/stb)
 
-include_directories(include/sword)
+include_directories(include)
 
 # Compile engine
 add_library(
@@ -47,6 +47,5 @@ endif ()
 
 target_link_libraries(sword ${libs})
 
-include_directories(include)
 add_executable(helloworld example/helloworld.c)
 target_link_libraries(helloworld sword)

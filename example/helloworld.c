@@ -9,6 +9,8 @@ int main(int argc, char *argv[]) {
   printf("Viewport size: %dx%d\n", SDGetViewportWidth(), SDGetViewportHeight());
   printf("DPI Scale factor: %f\n", SDGetPointToPixel());
 
+  SDRunScene();
+
   SDQuit();
 
   return 0;

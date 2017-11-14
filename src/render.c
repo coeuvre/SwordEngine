@@ -1,4 +1,4 @@
-#include "render.h"
+#include "sword/render.h"
 
 #include "context.h"
 
@@ -16,4 +16,4 @@ SDAPI int SDGetViewportHeight(void) { return CTX->viewportHeight; }
 
 SDAPI float SDGetPointToPixel(void) { return CTX->pointToPixel; }
 
-SDAPI float SDGetPixelToPoint(void) { return 1.0f / CTX->pointToPixel; }
+SDAPI float SDGetPixelToPoint(void) { return CTX->pixelToPoint; }

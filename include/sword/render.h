@@ -1,8 +1,8 @@
 #ifndef SD_RENDER_H
 #define SD_RENDER_H
 
-#include "def.h"
-#include "math.h"
+#include "sword/def.h"
+#include "sword/math.h"
 
 // Normalized color
 typedef struct SDColor {

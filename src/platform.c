@@ -1,13 +1,12 @@
-#include "platform.h"
+#include "sword/platform.h"
 
 #include "context.h"
-#include "render.h"
 
 SDAPI SDConfig SDDefaultConfig(void) {
   SDConfig config = {
       .window = {.width = 1280,
                  .height = 720,
-                 .title = "Sword Engine",
+                 .title = "Sword",
                  .supportHiDPI = 1},
       .exitOnEsc = 0,
   };
@@ -19,10 +18,7 @@ SDAPI SDConfig SDDefaultConfig(void) {
   return config;
 }
 
-SDAPI void SDInit(const SDConfig *config) {
-  CTX = malloc(sizeof(SDContext));
-  memset(CTX, 0, sizeof(*CTX));
-
+static void InitWindow(const SDConfig *config) {
   CTX->viewportWidth = config->window.width;
   CTX->viewportHeight = config->window.height;
 
@@ -87,6 +83,28 @@ SDAPI void SDInit(const SDConfig *config) {
   SDL_GL_GetDrawableSize(CTX->window, &drawableWidth, &drawableHeight);
   CTX->pointToPixel = drawableWidth * 1.0f / CTX->viewportWidth;
 #endif
+
+  CTX->pixelToPoint = 1.0 / CTX->pointToPixel;
+}
+
+static void InitOpenGL(void) {
+  glViewport(0, 0, CTX->viewportWidth, CTX->viewportHeight);
+
+  glEnable(GL_BLEND);
+  // Pre-multiplied alpha format
+  glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+  // Render at linear color space
+  glEnable(GL_FRAMEBUFFER_SRGB);
+
+  glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+}
+
+SDAPI void SDInit(const SDConfig *config) {
+  CTX = malloc(sizeof(SDContext));
+  memset(CTX, 0, sizeof(*CTX));
+
+  InitWindow(config);
+  InitOpenGL();
 }
 
 SDAPI void SDQuit(void) {
@@ -94,4 +112,40 @@ SDAPI void SDQuit(void) {
   CTX = NULL;
 }
 
-SDAPI void SDRunScene(void) {}
+static void ProcessSystemEvent(void) {
+  SDL_Event event;
+
+  while (SDL_PollEvent(&event)) {
+    switch (event.type) {
+      case SDL_QUIT: {
+        CTX->isRunning = 0;
+        break;
+      }
+
+      case SDL_KEYDOWN: {
+        if (event.key.keysym.sym == SDLK_ESCAPE) {
+          CTX->isRunning = 0;
+        }
+
+        break;
+      }
+
+      default:
+        break;
+    }
+  }
+}
+
+static void Render(void) {}
+
+SDAPI void SDRunScene(void) {
+  CTX->isRunning = 1;
+
+  while (CTX->isRunning) {
+    ProcessSystemEvent();
+
+    Render();
+
+    SDL_GL_SwapWindow(CTX->window);
+  }
+}

@@ -1,7 +1,7 @@
 #ifndef SD_PLATFORM_H
 #define SD_PLATFORM_H
 
-#include "def.h"
+#include "sword/def.h"
 
 typedef struct SDWindowConfig {
   int width;          // window width in point

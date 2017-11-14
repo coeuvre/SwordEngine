@@ -12,7 +12,10 @@
 #include <glad/glad.h>
 
 typedef struct SDContext {
+  int isRunning;
+
   float pointToPixel;
+  float pixelToPoint;
 
   int viewportWidth;
   int viewportHeight;
