@@ -70,7 +70,7 @@ typedef struct SDTexture SDTexture;
 SDAPI SDTexture *SDLoadTexture(const char *path);
 // Load Texture from Image
 SDAPI SDTexture *SDLoadTextureFromImage(const SDImage *image);
-SDAPI void SDDestoryTexture(SDTexture **texture);
+SDAPI void SDDestroyTexture(SDTexture **texture);
 
 typedef struct SDDrawTextureParams {
   SDTexture *texture;

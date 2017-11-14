@@ -1,10 +1,46 @@
 #ifndef SD_MATH_H
 #define SD_MATH_H
 
-typedef float SDFloat;
+#include "sword/def.h"
+
+#include <math.h>
 
 // ----------------------------------------------------------------------------
-// Vector 2
+// Scalar
+// ----------------------------------------------------------------------------
+
+typedef float SDFloat;
+
+SDINLINE SDFloat SDMinF(SDFloat x, SDFloat y) { return x <= y ? x : y; }
+
+SDINLINE SDFloat SDAbsF(SDFloat x) { return fabsf(x); }
+
+SDINLINE SDFloat SDFloorF(SDFloat x) { return floorf(x); }
+
+SDINLINE SDFloat SDCeilF(SDFloat x) { return ceilf(x); }
+
+SDINLINE SDFloat SDClampF(SDFloat x, SDFloat min, SDFloat max) {
+  SDFloat result = x;
+
+  if (x < min) {
+    result = min;
+  } else if (x > max) {
+    result = max;
+  }
+
+  return result;
+}
+
+SDINLINE SDFloat SDClamp01F(SDFloat x) { return SDClampF(x, 0.0f, 1.0f); }
+
+SDINLINE SDFloat SDLerpF(SDFloat a, SDFloat t, SDFloat b) {
+  return (1.0f - t) * a + t * b;
+}
+
+SDINLINE SDFloat SDNextPow2F(SDFloat x) { return powf(2.0f, SDCeilF(log2f(x))); }
+
+// ----------------------------------------------------------------------------
+// Vector2
 // ----------------------------------------------------------------------------
 
 typedef struct SDVec2 {

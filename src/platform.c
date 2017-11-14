@@ -87,7 +87,7 @@ static void InitWindow(const SDConfig *config) {
   CTX->pointToPixel = drawableWidth * 1.0f / CTX->viewportWidth;
 #endif
 
-  CTX->pixelToPoint = 1.0 / CTX->pointToPixel;
+  CTX->pixelToPoint = 1.0f / CTX->pointToPixel;
 }
 
 static void InitOpenGL(void) {
@@ -108,9 +108,13 @@ SDAPI void SDInit(const SDConfig *config) {
 
   InitWindow(config);
   InitOpenGL();
+
+  CTX->testTexture = SDLoadTexture("assets/background_day.png");
 }
 
 SDAPI void SDQuit(void) {
+  SDDestroyTexture(&CTX->testTexture);
+
   free(CTX);
   CTX = NULL;
 }

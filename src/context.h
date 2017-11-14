@@ -8,6 +8,8 @@
 #include <windows.h>
 #endif
 
+#include "sword/render.h"
+
 struct SDL_Window;
 struct SDL_GLContext;
 
@@ -22,6 +24,8 @@ typedef struct SDContext {
 
   struct SDL_Window *window;
   struct SDL_GLContext *glContext;
+
+  SDTexture *testTexture;
 } SDContext;
 
 extern SDContext *CTX;
