@@ -37,7 +37,9 @@ SDINLINE SDFloat SDLerpF(SDFloat a, SDFloat t, SDFloat b) {
   return (1.0f - t) * a + t * b;
 }
 
-SDINLINE SDFloat SDNextPow2F(SDFloat x) { return powf(2.0f, SDCeilF(log2f(x))); }
+SDINLINE SDFloat SDNextPow2F(SDFloat x) {
+  return powf(2.0f, SDCeilF(log2f(x)));
+}
 
 // ----------------------------------------------------------------------------
 // Vector2
@@ -46,6 +48,12 @@ SDINLINE SDFloat SDNextPow2F(SDFloat x) { return powf(2.0f, SDCeilF(log2f(x))); 
 typedef struct SDVec2 {
   SDFloat x, y;
 } SDVec2;
+
+SDINLINE SDVec2 SDV2(SDFloat x, SDFloat y) { return (SDVec2){x, y}; }
+
+SDINLINE SDVec2 SDHadamardDivV2(SDVec2 a, SDVec2 b) {
+  return (SDVec2){a.x / b.x, a.y / b.y};
+}
 
 // ----------------------------------------------------------------------------
 // Matrix 3
@@ -70,6 +78,65 @@ typedef struct SDMat3 {
   SDFloat m02, m12, m22;
 } SDMat3;
 
+SDINLINE SDMat3 SDIdentityM3(void) {
+  SDMat3 result;
+
+  result.m00 = 1.0f;
+  result.m01 = 0.0f;
+  result.m02 = 0.0f;
+
+  result.m10 = 0.0f;
+  result.m11 = 1.0f;
+  result.m12 = 0.0f;
+
+  result.m20 = 0.0f;
+  result.m21 = 0.0f;
+  result.m22 = 1.0f;
+
+  return result;
+}
+
+SDINLINE SDMat3 SDMat3Translation(SDFloat x, SDFloat y) {
+  SDMat3 result = SDIdentityM3();
+  result.m02 = x;
+  result.m12 = y;
+  return result;
+}
+
+SDINLINE SDMat3 SDMat3Rotation(SDFloat rad) {
+  SDMat3 result = {0};
+  result.m00 = cosf(rad);
+  result.m10 = sinf(rad);
+  result.m01 = -result.m10;
+  result.m11 = result.m00;
+  return result;
+}
+
+SDINLINE SDMat3 SDMat3Scale(SDFloat sx, SDFloat sy) {
+  SDMat3 result = SDIdentityM3();
+  result.m00 = sx;
+  result.m11 = sy;
+  return result;
+}
+
+SDINLINE SDMat3 SDDotM3(SDMat3 t1, SDMat3 t2) {
+  SDMat3 result;
+
+  result.m00 = t1.m00 * t2.m00 + t1.m01 * t2.m10 + t1.m02 * 0.0f;
+  result.m01 = t1.m00 * t2.m01 + t1.m01 * t2.m11 + t1.m02 * 0.0f;
+  result.m02 = t1.m00 * t2.m02 + t1.m01 * t2.m12 + t1.m02 * 1.0f;
+
+  result.m10 = t1.m10 * t2.m00 + t1.m11 * t2.m10 + t1.m12 * 0.0f;
+  result.m11 = t1.m10 * t2.m01 + t1.m11 * t2.m11 + t1.m12 * 0.0f;
+  result.m12 = t1.m10 * t2.m02 + t1.m11 * t2.m12 + t1.m12 * 1.0f;
+
+  result.m20 = 0.0f;
+  result.m21 = 0.0f;
+  result.m22 = 1.0f;
+
+  return result;
+}
+
 // ----------------------------------------------------------------------------
 // Rectangle
 // ----------------------------------------------------------------------------
@@ -77,5 +144,9 @@ typedef struct SDMat3 {
 typedef struct SDRect {
   SDVec2 min, max;
 } SDRect;
+
+SDINLINE SDRect SDRectMinMax(SDVec2 min, SDVec2 max) {
+  return (SDRect){min, max};
+}
 
 #endif  // SD_MATH_H

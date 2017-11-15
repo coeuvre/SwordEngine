@@ -9,6 +9,10 @@ typedef struct SDColor {
   SDFloat r, g, b, a;
 } SDColor;
 
+SDINLINE SDColor SDRGBA(SDFloat r, SDFloat g, SDFloat b, SDFloat a) {
+  return (SDColor){r, g, b, a};
+}
+
 // ----------------------------------------------------------------------------
 // Graphics Properties
 // ----------------------------------------------------------------------------
@@ -74,6 +78,7 @@ SDAPI void SDDestroyTexture(SDTexture **texture);
 
 typedef struct SDDrawTextureParams {
   SDTexture *texture;
+  SDMat3 transform;
   SDRect dstRect;  // Destination rect in world space
   SDRect srcRect;  // Source rect in texture space (pixel)
   SDColor tintColor;

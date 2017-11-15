@@ -90,25 +90,14 @@ static void InitWindow(const SDConfig *config) {
   CTX->pixelToPoint = 1.0f / CTX->pointToPixel;
 }
 
-static void InitOpenGL(void) {
-  glViewport(0, 0, CTX->viewportWidth, CTX->viewportHeight);
-
-  glEnable(GL_BLEND);
-  // Pre-multiplied alpha format
-  glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-  // Render at linear color space
-  glEnable(GL_FRAMEBUFFER_SRGB);
-
-  glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-}
-
 SDAPI void SDInit(const SDConfig *config) {
   CTX = malloc(sizeof(SDContext));
   memset(CTX, 0, sizeof(*CTX));
 
   InitWindow(config);
-  InitOpenGL();
 
+  CTX->rc = CreateRenderContext(CTX->viewportWidth, CTX->viewportHeight,
+                                CTX->pixelToPoint);
   CTX->testTexture = SDLoadTexture("assets/background_day.png");
 }
 
@@ -143,7 +132,10 @@ static void ProcessSystemEvent(void) {
   }
 }
 
-static void Render(void) {}
+static void Render(void) {
+  SDDrawTextureParams params = SDDefaultDrawTextureParams(CTX->testTexture);
+  SDDrawTexture(&params);
+}
 
 SDAPI void SDRunScene(void) {
   CTX->isRunning = 1;

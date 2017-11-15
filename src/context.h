@@ -13,6 +13,8 @@
 struct SDL_Window;
 struct SDL_GLContext;
 
+typedef struct RenderContext RenderContext;
+
 typedef struct SDContext {
   int isRunning;
 
@@ -25,9 +27,13 @@ typedef struct SDContext {
   struct SDL_Window *window;
   struct SDL_GLContext *glContext;
 
+  RenderContext *rc;
+
   SDTexture *testTexture;
 } SDContext;
 
 extern SDContext *CTX;
 
+extern RenderContext *CreateRenderContext(int viewportWidth, int viewportHeight,
+                                          float pixelToPoint);
 #endif  // SD_CONTEXT_H
