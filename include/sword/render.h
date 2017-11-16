@@ -84,13 +84,13 @@ typedef struct SDDrawTextureParams {
   SDColor tintColor;
 } SDDrawTextureParams;
 
-SDAPI SDDrawTextureParams SDDefaultDrawTextureParams(SDTexture *texture);
+SDAPI SDDrawTextureParams SDMakeDrawTextureParams(SDTexture *texture);
 
 /**
  * Code Example:
  *
  * SDTexture *texture = SDLoadTexture("xxx.png");
- * SDDrawTextureParams dtp = SDDefaultDrawTextureParams(texture);
+ * SDDrawTextureParams dtp = SDMakeDrawTextureParams(texture);
  * SDDrawTexture(&dtp);
  * SDDestroyTexture(&texture);
  */
@@ -107,7 +107,7 @@ typedef struct SDDrawRectParams {
   SDColor fillColor;
 } SDDrawRectParams;
 
-SDAPI SDDrawRectParams SDDefaultDrawRectParams(SDRect rect);
+SDAPI SDDrawRectParams SDMakeDrawRectParams(SDRect rect);
 
 SDAPI void SDDrawRect(const SDDrawRectParams *params);
 

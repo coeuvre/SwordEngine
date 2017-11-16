@@ -2,6 +2,7 @@
 #define SD_PLATFORM_H
 
 #include "sword/def.h"
+#include "sword/entity.h"
 
 typedef struct SDWindowConfig {
   int width;          // window width in point
@@ -21,6 +22,6 @@ SDAPI SDConfig SDDefaultConfig(void);
 SDAPI void SDInit(const SDConfig *config);
 SDAPI void SDQuit(void);
 
-SDAPI void SDRunScene(void);
+SDAPI void SDRunScene(SDEntityRef entityRef);
 
 #endif  // SD_PLATFORM_H

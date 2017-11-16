@@ -28,6 +28,7 @@ include_directories(include)
 add_library(
     sword
     src/context.c
+    src/entity.c
     src/platform.c
     src/render.c
 )

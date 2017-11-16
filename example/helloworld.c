@@ -2,6 +2,15 @@
 
 #include "sword/sword.h"
 
+static SDEntityRef createRootEntity(void) {
+  SDEntityRef root = SDCreateEntity("Root");
+
+  SDTransformComponent *transform = SDAddComponent(root, Transform);
+  SDSpriteComponent *sprite = SDAddComponent(root, Sprite);
+
+  return root;
+}
+
 int main(int argc, char *argv[]) {
   SDConfig config = SDDefaultConfig();
   SDInit(&config);
@@ -10,7 +19,7 @@ int main(int argc, char *argv[]) {
          SDGetViewportHeight());
   printf("DPI Scale factor: %.1f\n", SDGetPointToPixel());
 
-  SDRunScene();
+  SDRunScene(createRootEntity());
 
   SDQuit();
 

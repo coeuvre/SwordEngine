@@ -4,6 +4,7 @@
 #include <glad/glad.h>
 
 #include "context.h"
+#include "sword/entity.h"
 
 SDAPI SDConfig SDDefaultConfig(void) {
   SDConfig config = {
@@ -115,16 +116,13 @@ static void ProcessSystemEvent(void) {
     switch (event.type) {
       case SDL_QUIT: {
         CTX->isRunning = 0;
-        break;
-      }
+      } break;
 
       case SDL_KEYDOWN: {
         if (event.key.keysym.sym == SDLK_ESCAPE) {
           CTX->isRunning = 0;
         }
-
-        break;
-      }
+      } break;
 
       default:
         break;
@@ -133,11 +131,11 @@ static void ProcessSystemEvent(void) {
 }
 
 static void Render(void) {
-  SDDrawTextureParams params = SDDefaultDrawTextureParams(CTX->testTexture);
+  SDDrawTextureParams params = SDMakeDrawTextureParams(CTX->testTexture);
   SDDrawTexture(&params);
 }
 
-SDAPI void SDRunScene(void) {
+SDAPI void SDRunScene(SDEntityRef entityRef) {
   CTX->isRunning = 1;
 
   while (CTX->isRunning) {

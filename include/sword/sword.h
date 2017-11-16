@@ -1,6 +1,7 @@
 #ifndef SD_SWORD_H
 #define SD_SWORD_H
 
+#include "sword/entity.h"
 #include "sword/math.h"
 #include "sword/platform.h"
 #include "sword/render.h"

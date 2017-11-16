@@ -350,7 +350,7 @@ SDAPI void SDDestroyTexture(SDTexture **ptr) {
   *ptr = NULL;
 }
 
-SDAPI SDDrawTextureParams SDDefaultDrawTextureParams(SDTexture *texture) {
+SDAPI SDDrawTextureParams SDMakeDrawTextureParams(SDTexture *texture) {
   SDFloat pixelToPoint = SDGetPixelToPoint();
   SDDrawTextureParams params = {
       .texture = texture,
@@ -360,7 +360,8 @@ SDAPI SDDrawTextureParams SDDefaultDrawTextureParams(SDTexture *texture) {
           SDV2(texture->width * pixelToPoint, texture->height * pixelToPoint)),
       .srcRect = SDRectMinMax(SDV2(0.0f, 0.0f), SDV2((SDFloat)texture->width,
                                                      (SDFloat)texture->height)),
-      .tintColor = SDRGBA(1.0f, 1.0f, 1.0f, 1.0f)};
+      .tintColor = SDRGBA(1.0f, 1.0f, 1.0f, 1.0f),
+  };
   return params;
 }
 

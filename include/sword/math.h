@@ -49,6 +49,8 @@ typedef struct SDVec2 {
   SDFloat x, y;
 } SDVec2;
 
+SDINLINE SDVec2 SDZeroVec2(void) { return (SDVec2){0.0f, 0.0f}; }
+
 SDINLINE SDVec2 SDV2(SDFloat x, SDFloat y) { return (SDVec2){x, y}; }
 
 SDINLINE SDVec2 SDHadamardDivV2(SDVec2 a, SDVec2 b) {
@@ -144,6 +146,10 @@ SDINLINE SDMat3 SDDotM3(SDMat3 t1, SDMat3 t2) {
 typedef struct SDRect {
   SDVec2 min, max;
 } SDRect;
+
+SDINLINE SDRect SDZeroRect(void) {
+  return (SDRect){SDV2(0.0f, 0.0f), SDV2(0.0f, 0.0f)};
+}
 
 SDINLINE SDRect SDRectMinMax(SDVec2 min, SDVec2 max) {
   return (SDRect){min, max};
