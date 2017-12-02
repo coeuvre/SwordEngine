@@ -4,24 +4,16 @@
 #include "sword/def.h"
 #include "sword/entity.h"
 
-typedef struct SDWindowConfig {
-  int width;          // window width in point
-  int height;         // window height in point
-  const char *title;  // window title
-  int supportHiDPI;   // support hidpi mode
-} SDWindowConfig;
+typedef void (*SDLoadCallback)(void *gameState);
+typedef void (*SDUpdateCallback)(void *gameState);
+typedef void (*SDRenderCallback)(void *gameState);
 
-typedef struct SDConfig {
-  SDWindowConfig window;
-  int exitOnEsc;  // Exit game when Esc pressed?
-} SDConfig;
+SDAPI void SDSetExitOnEsc(int exitOnEsc);
+SDAPI void SDSetGameState(void *gameState);
+SDAPI void SDSetLoadCallback(SDLoadCallback load);
+SDAPI void SDSetUpdateCallback(SDUpdateCallback update);
+SDAPI void SDSetRenderCallback(SDRenderCallback render);
 
-// Get default configuration
-SDAPI SDConfig SDDefaultConfig(void);
-
-SDAPI void SDInit(const SDConfig *config);
-SDAPI void SDQuit(void);
-
-SDAPI void SDRunScene(SDEntityRef entityRef);
+SDAPI void SDRun(void);
 
 #endif  // SD_PLATFORM_H

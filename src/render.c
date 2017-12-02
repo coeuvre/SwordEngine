@@ -16,12 +16,12 @@ typedef struct DrawTextureProgram {
   GLint MVPLocation;
 } DrawTextureProgram;
 
-typedef struct RenderContext {
+struct RenderContext {
   int numDrawCall;
   SDMat3 projection;
   SDMat3 camera;
   DrawTextureProgram drawTextureProgram;
-} RenderContext;
+};
 
 const char DRAW_TEXTURE_VERTEX_SHADER[] =
     "#version 330 core                                                      \n"
@@ -210,13 +210,13 @@ SDAPI float SDGetCanvasHeight(void) {
   return SDGetViewportHeight() * SDGetPixelToPoint();
 }
 
-SDAPI int SDGetViewportWidth(void) { return CTX->viewportWidth; }
+SDAPI int SDGetViewportWidth(void) { return CTX.viewportWidth; }
 
-SDAPI int SDGetViewportHeight(void) { return CTX->viewportHeight; }
+SDAPI int SDGetViewportHeight(void) { return CTX.viewportHeight; }
 
-SDAPI float SDGetPointToPixel(void) { return CTX->pointToPixel; }
+SDAPI float SDGetPointToPixel(void) { return CTX.pointToPixel; }
 
-SDAPI float SDGetPixelToPoint(void) { return CTX->pixelToPoint; }
+SDAPI float SDGetPixelToPoint(void) { return CTX.pixelToPoint; }
 
 // ----------------------------------------------------------------------------
 // Image
@@ -366,7 +366,7 @@ SDAPI SDDrawTextureParams SDMakeDrawTextureParams(SDTexture *texture) {
 }
 
 SDAPI void SDDrawTexture(const SDDrawTextureParams *params) {
-  RenderContext *rc = CTX->rc;
+  RenderContext *rc = CTX.rc;
   SDTexture *texture = params->texture;
 
   if (!texture) {

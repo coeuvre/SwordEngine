@@ -15,7 +15,7 @@ struct SDL_GLContext;
 
 typedef struct RenderContext RenderContext;
 
-typedef struct SDContext {
+typedef struct Context {
   int isRunning;
 
   float pointToPixel;
@@ -28,11 +28,9 @@ typedef struct SDContext {
   struct SDL_GLContext *glContext;
 
   RenderContext *rc;
+} Context;
 
-  SDTexture *testTexture;
-} SDContext;
-
-extern SDContext *CTX;
+extern Context CTX;
 
 extern RenderContext *CreateRenderContext(int viewportWidth, int viewportHeight,
                                           float pixelToPoint);

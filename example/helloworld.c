@@ -2,26 +2,42 @@
 
 #include "sword/sword.h"
 
-static SDEntityRef createRootEntity(void) {
-  SDEntityRef root = SDCreateEntity("Root");
+typedef struct GameState {
+  int counter;
+  SDTexture *texture;
+} GameState;
 
-  SDTransformComponent *transform = SDAddComponent(root, Transform);
-  SDSpriteComponent *sprite = SDAddComponent(root, Sprite);
+static void Load(GameState *gameState) {
+  printf("Viewport size: %dx%d px\n", SDGetViewportWidth(),
+         SDGetViewportHeight());
+  printf("Canvas size: %.0fx%.0f pt\n", SDGetCanvasWidth(),
+         SDGetCanvasHeight());
+  printf("HiDPI scale: %.0f\n", SDGetPointToPixel());
 
-  return root;
+  gameState->texture = SDLoadTexture("assets/background_day.png");
+}
+
+static void Update(GameState *gameState) {
+  gameState->counter++;
+
+  printf("%d\n", gameState->counter);
+}
+
+static void Render(GameState *gameState) {
+  SDDrawTextureParams params = SDMakeDrawTextureParams(gameState->texture);
+  SDDrawTexture(&params);
 }
 
 int main(int argc, char *argv[]) {
-  SDConfig config = SDDefaultConfig();
-  SDInit(&config);
+  GameState gameState = {0};
 
-  printf("Viewport size: %dx%d (px)\n", SDGetViewportWidth(),
-         SDGetViewportHeight());
-  printf("DPI Scale factor: %.1f\n", SDGetPointToPixel());
+  SDSetExitOnEsc(1);
+  SDSetGameState(&gameState);
+  SDSetLoadCallback((SDLoadCallback)Load);
+  SDSetUpdateCallback((SDUpdateCallback)Update);
+  SDSetRenderCallback((SDRenderCallback)Render);
 
-  SDRunScene(createRootEntity());
-
-  SDQuit();
+  SDRun();
 
   return 0;
 }
